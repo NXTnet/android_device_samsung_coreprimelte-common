@@ -8,8 +8,12 @@
     "target_path": "device/samsung/qcom-common"
   },
   {
-    "repository": "android_kernel_samsung_msm8916",
-    "target_path": "kernel/samsung/msm8916"
+    "repository": "android_kernel_samsung_coreprimelte",
+    "target_path": "kernel/samsung/coreprimelte"
+  },
+  {
+    "repository": "android_kernel_samsung_msm8916-caf",
+    "target_path": "kernel/samsung/msm8916-caf"
   },
   {
     "repository": "android_hardware_qcom_fm",
