@@ -275,6 +275,13 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sys.usb.default.config=mtp \
     persist.sys.isUsbOtgEnabled=true
 
+# For userdebug builds
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.secure=0 \
+    ro.adb.secure=0 \
+    ro.debuggable=1 \
+    persist.service.adb.enable=1
+
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=SamsungRIL
