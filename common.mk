@@ -275,7 +275,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sys.usb.default.config=mtp \
     persist.sys.isUsbOtgEnabled=true \
     ro.secure=0 \
-    ro.adb.secure=0
+    ro.adb.secure=0 \
+    ro.debuggable=1
 
 # For userdebug builds
 #ADDITIONAL_DEFAULT_PROPERTIES += \
