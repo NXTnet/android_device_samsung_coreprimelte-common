@@ -273,15 +273,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp,adb \
     ro.sys.usb.default.config=mtp \
-    persist.sys.isUsbOtgEnabled=true
+    persist.sys.isUsbOtgEnabled=true \
+    ro.secure=0 \
+    ro.adb.secure=0
 
 # For userdebug builds
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.secure=0 \
-    ro.adb.secure=0 \
-    ro.debuggable=1 \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1
+#ADDITIONAL_DEFAULT_PROPERTIES += \
+#    ro.secure=0 \
+#    ro.adb.secure=0 \
+#    ro.debuggable=1 \
+#    persist.service.adb.enable=1 \
+#    persist.service.debuggable=1
 
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
