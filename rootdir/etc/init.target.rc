@@ -231,7 +231,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     keycodes 114 115 116
 
 on property:sys.ims.DATA_DAEMON_STATUS=1
-    start
+    start ims_rtp_daemon
 
 on property:sys.boot_completed=1
    start qrngp
