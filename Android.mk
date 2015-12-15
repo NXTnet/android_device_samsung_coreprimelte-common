@@ -22,7 +22,7 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
-# CMN
+# CMNLIB
 CMN_IMAGES := \
     cmnlib.b00 cmnlib.b01 cmnlib.b02 cmnlib.b03 cmnlib.mdt
 
@@ -60,6 +60,19 @@ $(ISDB_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /firmware/image/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(ISDB_SYMLINKS)
+
+# KM
+KM_IMAGES := \
+    keymaste.b00 keymaste.b01 keymaste.b02 keymaste.b03 keymaste.mdt
+
+KM_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/keymaster/,$(notdir $(KM_IMAGES)))
+$(KM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "Keymaster firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/keymaste$(suffix $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(KM_SYMLINKS)
 
 # MCpay
 MCP_IMAGES := \
