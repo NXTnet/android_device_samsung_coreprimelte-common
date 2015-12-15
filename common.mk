@@ -61,6 +61,7 @@ PRODUCT_PACKAGES += \
     audio.primary.msm8916 \
     audio.r_submix.default \
     audio.usb.default \
+    audio_policy.msm8916 \
     libaudio-resampler \
     libqcompostprocbundle \
     libqcomvisualizer \
@@ -134,6 +135,7 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.crda.sh \
+    init.qcom.audio.sh \
     init.qcom.bt.sh \
     init.qcom.coex.sh
 
@@ -278,6 +280,13 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=SamsungRIL
+
+# Use default Samsung notification sound
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/media/audio/notifications/S_Whistle.ogg:system/media/audio/notifications/S_Whistle.ogg
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.notification_sound=S_Whistle.ogg
 
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
