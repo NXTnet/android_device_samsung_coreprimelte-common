@@ -70,7 +70,7 @@ $(KM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "Keymaster firmware link: $@"
 	@mkdir -p $(dir $@)
 	@rm -rf $@
-	$(hide) ln -sf /firmware/image/keymaster$(suffix $@) $@
+	$(hide) ln -sf /firmware/image/keymaste$(suffix $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(KM_SYMLINKS)
 
@@ -287,6 +287,6 @@ $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9306; \
 # Keymaster
 $(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware/keymaster; \
 	ln -sf /firmware/image/keymaste.mdt \
-		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaste.mdt)
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.mdt)
 
 endif
