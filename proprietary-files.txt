@@ -4,6 +4,7 @@ vendor/lib/libadsprpc.so
 vendor/lib/libfastcvopt.so
 
 # Audio
+vendor/bin/audioflacapp
 vendor/lib/libacdb-fts.so
 vendor/lib/libacdbloader.so
 vendor/lib/libacdbrtac.so
@@ -20,11 +21,15 @@ bin/btnvtool
 bin/hci_qcomm_init
 vendor/lib/libbtnv.so
 
+# Lights
+lib/hw/lights.msm8916.so
+
 # Sensors
 lib/hw/sensors.msm8916.so
 
 # NFC
 lib/hw/nfc_nci.msm8916.so
+etc/firmware/nfc_test.bin
 etc/sec_s3fwrn5_rfreg.bin
 vendor/firmware/sec_s3fwrn5_firmware.bin
 
@@ -85,8 +90,14 @@ lib/libaec_algo_front.so
 lib/libawb_algo_rear_al.so
 lib/libawb_algo_front.so
 lib/libaec_algo_rear.so
+lib/libarccamera.so
+lib/libarcsoft_panorama_burstcapture.so
+lib/libarcsoft_selfie_camera_lite.so
+lib/libarcsoft_sensorndk.so
 
 # Camera firmware
+cameradata/datapattern_420sp.yuv
+cameradata/datapattern_front_420sp.yuv
 etc/firmware/cpp_firmware_v1_1_1.fw
 etc/firmware/cpp_firmware_v1_1_6.fw
 etc/firmware/cpp_firmware_v1_2_0.fw
@@ -110,6 +121,7 @@ vendor/lib/libWVStreamControlAPI_L3.so
 vendor/lib/mediadrm/libwvdrmengine.so
 
 # Keystore
+lib/hw/keystore.msm8916.so
 vendor/lib/lib-sec-disp.so
 vendor/lib/libSecureUILib.so
 vendor/lib/libStDrvInt.so
@@ -127,6 +139,10 @@ vendor/lib/libizat_core.so
 vendor/lib/liblbs_core.so
 
 # Graphics
+lib/hw/copybit.msm8916.so
+lib/hw/gralloc.msm8916.so
+lib/hw/hwcomposer.msm8916.so
+lib/hw/memtrack.msm8916.so
 vendor/lib/egl/eglsubAndroid.so
 vendor/lib/egl/libEGL_adreno.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
@@ -156,6 +172,7 @@ etc/firmware/a420_pfp.fw
 etc/firmware/a420_pm4.fw
 
 # Media
+lib/libmedia_jni.so
 lib/libOmxVdecHevc.so
 vendor/lib/libDivxDrm.so
 vendor/lib/libExtendedExtractor.so
@@ -164,6 +181,7 @@ vendor/lib/libI420colorconvert.so
 vendor/lib/libmmosal.so
 vendor/lib/libmmparser.so
 vendor/lib/libmm-color-convertor.so
+vendor/lib/libmm-qdcm.so
 vendor/lib/libOmxAacDec.so
 vendor/lib/libOmxEvrcDec.so
 vendor/lib/libOmxQcelp13Dec.so
@@ -234,18 +252,28 @@ lib/libcommon_time_client.so
 bin/ssr_diag
 bin/ssr_setup
 bin/subsystem_ramdump
+bin/usbhub
+bin/usbhub_init
+bin/vm_bms
 lib/libhdcp2.so
 lib/libatparser.so
 
 # Firmware
+etc/firmware/ice40.bin
+etc/firmware/leia_pfp_470.fw
+etc/firmware/leia_pm4_470.fw
 etc/firmware/Signedrompatch_v20.bin
 etc/firmware/Signedrompatch_v21.bin
 etc/firmware/Signedrompatch_v24.bin
 etc/firmware/Signedrompatch_v30.bin
 
 # Prebuilt audio HAL
+lib/hw/audio.a2dp.default.so
 lib/hw/audio_policy.default.so
+lib/hw/audio.primary.default.so
 lib/hw/audio.primary.msm8916.so
+lib/hw/audio.r_submix.default.so
+lib/hw/audio.usb.default.so
 lib/libSamsungPreProcess.so
 lib/libsamsungRecord.so
 lib/lib_SamsungRec_V03010.so
