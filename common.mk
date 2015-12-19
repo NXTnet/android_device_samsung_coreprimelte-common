@@ -134,6 +134,7 @@ PRODUCT_PACKAGES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
+    hcidump.sh \
     init.crda.sh \
     init.qcom.audio.sh \
     init.qcom.bt.sh \
