@@ -287,6 +287,14 @@ $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9306; \
 # Keymaster
 $(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware/keymaster; \
 	ln -sf /firmware/image/keymaste.mdt \
-		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.mdt)
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.mdt; \
+	ln -sf /firmware/image/keymaste.b00 \
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.b00; \
+	ln -sf /firmware/image/keymaste.b01 \
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.b01; \
+	ln -sf /firmware/image/keymaste.b02 \
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.b02; \
+	ln -sf /firmware/image/keymaste.b03 \
+		$(TARGET_OUT_VENDOR)/firmware/keymaster/keymaster.b03)
 
 endif
