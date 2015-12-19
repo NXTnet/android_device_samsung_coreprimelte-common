@@ -138,6 +138,7 @@ PRODUCT_PACKAGES += \
     init.qcom.audio.sh \
     init.qcom.bt.sh \
     init.qcom.coex.sh \
+    init.qcom.wifi.sh \
     init.qcom.zram.sh
 
 PRODUCT_PACKAGES += \
