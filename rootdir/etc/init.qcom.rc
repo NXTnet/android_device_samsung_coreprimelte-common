@@ -147,12 +147,11 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    setprop wifi.interface wlan0
-
 #   Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.wifi    524288,2097152,4194304,262144,524288,1048576
 
+    setprop wifi.interface wlan0
 
     setprop ro.telephony.call_ring.multiple false
 
@@ -247,6 +246,11 @@ on boot
     chown system radio /sys/class/sensors/proximity_sensor/thresh_low
     chown system radio /sys/class/sensors/proximity_sensor/prox_offset_pass
 
+    # Vibrator
+    chmod 0644 /sys/class/timed_output/vibrator/pwm_value
+    chown system system /sys/class/timed_output/vibrator/pwm_value
+    chown system system /sys/class/timed_output/vibrator/enable
+
     # permission for Input Device(TSP).
     chown system radio /sys/class/sec/tsp/cmd
     chmod 0660 /sys/class/sec/tsp/input/enabled
@@ -325,9 +329,23 @@ on boot
     chown radio system /sys/class/lcd/panel/partial_disp
     chmod 0660 /sys/class/lcd/panel/partial_disp
 
+    # camera sockets
+    mkdir /data/misc/camera 0770 camera camera
+
+    chown radio system /sys/class/lcd/panel/partial_disp
+    chmod 0660 /sys/class/lcd/panel/partial_disp
+
     # Adjust YUV to RGB Conversion(CSC_Conversion)
     chown system media_rw /sys/class/graphics/fb0/csc_cfg
     chmod 0660 /sys/class/graphics/fb0/csc_cfg
+
+    # color
+    chown system system /sys/devices/virtual/graphics/fb0/rgb
+    chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
+
+    # Create directory used by display clients
+    mkdir /data/misc/display 0770 system graphics
+    mkdir /persist/display 0770 system graphics
 
     # Permissions for gpio_keys
     chown system radio /sys/class/sec/sec_key/wakeup_keys
@@ -350,14 +368,42 @@ on boot
     chown system radio /sys/class/host_notify/usb_otg/booster
     chmod 0660 /sys/class/host_notify/usb_otg/booster
 
+    # GPIO keys
+    chmod 0660 /sys/class/input/input9/enabled
+    chown system system /sys/class/input/input9/enabled
+
+    # Access permission for secure touch
+    chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch_enable
+    chmod 0440 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch
+    chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0070/secure_touch_enable
+    chmod 0440 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0070/secure_touch
+    chown system drmrpc /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch_enable
+    chown system drmrpc /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch
+    chown system drmrpc /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0070/secure_touch_enable
+    chown system drmrpc /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0070/secure_touch
+
+    # Permissions for bluetooth.
+    setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
+    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+
+    chown radio net_bt_stack /efs/bluetooth/bt_addr
+    chmod 0755 /efs/bluetooth/bt_addr
+    restorecon_recursive /efs/bluetooth
+
 # msm specific files that need to be created on /data
 on post-fs-data
 
+    mkdir /data/misc/camera 0770 camera camera
+
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
-    chown media_rw media_rw /data/media
+    restorecon_recursive /data/media
 
     mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+
+    # Enable the setgid bit on the directory
+    mkdir /data/bluetooth 0770 bluetooth bluetooth
+    chmod 2770 /data/bluetooth
 
     # Create the directories used by the Wireless subsystem
     mkdir /data/misc/wifi 0770 wifi system
@@ -365,6 +411,14 @@ on post-fs-data
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0775 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
+
+    # for WIFI TRP/TIS
+    chown system root /data/.psm.info
+    chmod 0664 /data/.psm.info
+
+    # for WIFI Antena Selection
+    chown system root /data/.ant.info
+    chmod 0664 /data/.ant.info
 
     # for WIFI MAC address
     mkdir /efs/wifi 0775 radio system
@@ -490,6 +544,30 @@ on post-fs-data
     chown radio system /sys/class/dct/dct_node/libname
     chown radio system /sys/class/dct/dct_node/tunned
 
+    # drm and related files in EFS
+    mkdir /efs/drm 0774 drm system
+    mkdir /efs/drm/sdrm 0774 drm system
+    mkdir /efs/drm/sdrm/data_agent 0774 drm system
+    restorecon /efs/drm
+    restorecon /efs/drm/sdrm
+    restorecon /efs/drm/data_agent
+
+    # DivX DRM
+    mkdir /efs/.files 0775
+    mkdir /efs/.files/.dx1 0775
+    mkdir /efs/.files/.dm33 0775
+    mkdir /efs/.files/.mp301 0775
+    chown media system /efs/.files/.dx1
+    chown media system /efs/.files/.dm33
+    chown media system /efs/.files/.mp301
+    chmod 0775 /efs/.files/.dx1
+    chmod 0775 /efs/.files/.dm33
+    chmod 0775 /efs/.files/.mp301
+
+    setprop vold.post_fs_data_done 1
+
+    mkdir /data/diag_logs 0777 system system 5
+
 #service qcomsysd /system/bin/qcom-system-daemon
 #    class main
 #    user root
@@ -500,7 +578,6 @@ on property:ro.use_data_netmgrd=true
 
 service netmgrd /system/bin/netmgrd
     class main
-    disabled
 
 on property:bluetooth.isEnabled=true
     start btwlancoex
@@ -561,7 +638,7 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
-    disabled
+    group system
 
 service rfs_access /system/bin/rfs_access
    class core
@@ -583,6 +660,7 @@ service start_hci_filter /system/bin/wcnss_filter
 service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     class core
     user root
+    seclabel u:r:bluetooth_loader:s0
     oneshot
 
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
@@ -590,6 +668,7 @@ service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     user bluetooth
     group bluetooth net_bt_admin net_bt_stack
     disabled
+    seclabel u:r:bluetooth_loader:s0
     oneshot
 
 on property:bluetooth.hciattach=true
@@ -603,6 +682,7 @@ service hciattach_ath3k /system/bin/sh /system/etc/init.ath3k.bt.sh
      user bluetooth
      group system bluetooth net_bt_admin misc
      disabled
+     seclabel u:r:bluetooth_loader:s0
      oneshot
 
 service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
@@ -741,7 +821,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
     class late_start
     disabled
     oneshot
@@ -1015,42 +1095,34 @@ service profiler_daemon /system/bin/profiler_daemon
 # virtual sdcard daemon running as media_rw (1023)
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l -r /data/media /mnt/shell/emulated
     class late_start
-    oneshot
 
 service fuse_extSdCard /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d -f /mnt/media_rw/extSdCard /storage/extSdCard
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveA /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveA /storage/UsbDriveA
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveB /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveB /storage/UsbDriveB
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveC /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveC /storage/UsbDriveC
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveD /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveD /storage/UsbDriveD
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveE /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveE /storage/UsbDriveE
     class late_start
     disabled
-    oneshot
 
 service fuse_UsbDriveF /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveF /storage/UsbDriveF
     class late_start
     disabled
-    oneshot
 
 # umount service
 service umount_service /system/bin/umount /preload
@@ -1079,6 +1151,23 @@ service hcidump /system/bin/sh /system/etc/hcidump.sh
 
 service charger /charger
     class charger
+    group log
+    seclabel u:r:healthd:s0
+
+service ssr_setup /system/bin/ssr_setup
+    oneshot
+    disabled
+
+service ssr_diag /system/bin/ssr_diag
+    class late_start
+    user system
+    group system
+
+service ss_ramdump /system/bin/subsystem_ramdump
+    class main
+    user system
+    group system
+    disabled
 
 # Define fastmmi
 service fastmmi /system/bin/mmi
@@ -1186,11 +1275,21 @@ service wcnss-service /system/bin/wcnss_service
     user system
     group system wifi radio
 
-on property:persist.sys.ssr.restart_level=1
-    write /sys/module/subsystem_restart/parameters/restart_level 1
+#on property:persist.sys.ssr.restart_level=1
+#    write /sys/module/subsystem_restart/parameters/restart_level 1
 
-on property:persist.sys.ssr.restart_level=3
-    write /sys/module/subsystem_restart/parameters/restart_level 3
+#on property:persist.sys.ssr.restart_level=3
+#    write /sys/module/subsystem_restart/parameters/restart_level 3
+
+on property:persist.sys.ssr.restart_level=*
+    start ssr_setup
+
+on property:persist.sys.ssr.enable_ramdumps=1
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
+    start ss_ramdump
+
+on property:persist.sys.ssr.enable_ramdumps=0
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
 # Change IO scheduler to CFQ after boot_complete
 on property:sys.boot_completed=1
