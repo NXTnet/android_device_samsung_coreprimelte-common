@@ -1,4 +1,4 @@
-Device configuration for Samsung Galaxy Core Prime LTE (Qualcomm variants)
+###Device configuration for Samsung Galaxy Core Prime LTE (Qualcomm variants)
 
 ### Copyright
 
