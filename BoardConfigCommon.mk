@@ -46,8 +46,8 @@ BOARD_RAMDISK_OFFSET         := 0x02000000
 BOARD_KERNEL_TAGS_OFFSET     := 0x01e00000
 BOARD_KERNEL_SEPARATED_DT    := true
 BOARD_KERNEL_PAGESIZE        := 2048
-TARGET_KERNEL_SOURCE         := kernel/samsung/coreprimelte
-#TARGET_KERNEL_SOURCE         := kernel/samsung/msm8916-caf
+#TARGET_KERNEL_SOURCE         := kernel/samsung/coreprimelte
+TARGET_KERNEL_SOURCE         := kernel/samsung/msm8916-caf
 
 TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 
