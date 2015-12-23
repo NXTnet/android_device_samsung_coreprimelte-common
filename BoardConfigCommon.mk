@@ -49,7 +49,7 @@ BOARD_KERNEL_PAGESIZE        := 2048
 #TARGET_KERNEL_SOURCE         := kernel/samsung/coreprimelte
 TARGET_KERNEL_SOURCE         := kernel/samsung/msm8916-caf
 
-TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
+#TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 
 # Partition sizes
 TARGET_USERIMAGES_USE_EXT4 := true
