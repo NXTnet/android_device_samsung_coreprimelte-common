@@ -21,6 +21,9 @@ bin/btnvtool
 bin/hci_qcomm_init
 vendor/lib/libbtnv.so
 
+# Lights
+lib/hw/lights.msm8916.so
+
 # Sensors
 lib/hw/sensors.msm8916.so
 
@@ -118,6 +121,7 @@ vendor/lib/libWVStreamControlAPI_L3.so
 vendor/lib/mediadrm/libwvdrmengine.so
 
 # Keystore
+lib/hw/keystore.msm8916.so
 vendor/lib/lib-sec-disp.so
 vendor/lib/libSecureUILib.so
 vendor/lib/libStDrvInt.so
@@ -135,6 +139,10 @@ vendor/lib/libizat_core.so
 vendor/lib/liblbs_core.so
 
 # Graphics
+lib/hw/copybit.msm8916.so
+lib/hw/gralloc.msm8916.so
+lib/hw/hwcomposer.msm8916.so
+lib/hw/memtrack.msm8916.so
 vendor/lib/egl/eglsubAndroid.so
 vendor/lib/egl/libEGL_adreno.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
@@ -260,8 +268,12 @@ etc/firmware/Signedrompatch_v24.bin
 etc/firmware/Signedrompatch_v30.bin
 
 # Prebuilt audio HAL
+lib/hw/audio.a2dp.default.so
 lib/hw/audio_policy.default.so
+lib/hw/audio.primary.default.so
 lib/hw/audio.primary.msm8916.so
+lib/hw/audio.r_submix.default.so
+lib/hw/audio.usb.default.so
 lib/libSamsungPreProcess.so
 lib/libsamsungRecord.so
 lib/lib_SamsungRec_V03010.so
